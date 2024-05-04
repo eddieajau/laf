@@ -1,0 +1,14 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "prettier.endOfLine": "lf",
+  "prettier.useEditorConfig": false,
+  "prettier.printWidth": 120,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

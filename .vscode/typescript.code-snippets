@@ -1,0 +1,42 @@
+{
+  "Class Template": {
+    "prefix": "t-class",
+    "body": [
+      "/**",
+      " * @copyright $CURRENT_YEAR Andrew Eddie. All rights reserved.",
+      " */",
+      "",
+      "export class $TM_FILENAME_BASE {",
+      "  constructor() {}",
+      "}"
+    ]
+  },
+  "Test File Skeleton": {
+    "prefix": "t-test",
+    "body": [
+      "/**",
+      " * @copyright $CURRENT_YEAR Andrew Eddie. All rights reserved.",
+      " */",
+      "",
+      "import { jest } from '@jest/globals'",
+      "",
+      "describe('${Class}', () => {",
+      "  let instance: ${Class}",
+      "",
+      "  beforeEach(() => {",
+      "    instance = new ${Class}()",
+      "  })",
+      "",
+      "  afterEach(() => {",
+      "    jest.clearAllMocks()",
+      "  })",
+      "",
+      "  it('should work', () => {",
+      "    expect(false).toBeTruthy()",
+      "  })",
+      "})",
+      ""
+    ],
+    "description": "Test file skeleton"
+  }
+}

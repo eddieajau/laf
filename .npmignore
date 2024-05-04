@@ -1,0 +1,9 @@
+/.vscode
+/coverage
+/docs
+/test
+.eslintrc.json
+.gitignore
+jest.config.ts
+jest.setup.ts
+tsconfig.json

@@ -4,6 +4,7 @@
     "body": [
       "/**",
       " * @copyright $CURRENT_YEAR Andrew Eddie. All rights reserved.",
+      " * @license   MIT",
       " */",
       "",
       "export class $TM_FILENAME_BASE {",
@@ -16,6 +17,7 @@
     "body": [
       "/**",
       " * @copyright $CURRENT_YEAR Andrew Eddie. All rights reserved.",
+      " * @license   MIT",
       " */",
       "",
       "import { jest } from '@jest/globals'",

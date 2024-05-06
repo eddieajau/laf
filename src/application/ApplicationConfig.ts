@@ -5,6 +5,18 @@
 
 import { existsOrThrow } from '../validation'
 
+/**
+ * Expects the following configuration.
+ * - BUILD_NUMBER
+ * - LOG_LEVEL - Default: 'info'.
+ * @example
+ * ```typescript
+ * // Assuming this file is in `/src`.
+ * import { version } from '../package.json'
+ *
+ * const config = new ApplicationConfig({ ...process.env, version })
+ * ```
+ */
 export class ApplicationConfig {
   public build?: string
 

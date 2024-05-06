@@ -1,5 +1,6 @@
 /.vscode
 /coverage
+/demo
 /docs
 /test
 .eslintrc.json

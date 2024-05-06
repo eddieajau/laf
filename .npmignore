@@ -3,8 +3,10 @@
 /demo
 /docs
 /test
+.env
 .eslintrc.json
 .gitignore
+.npmrc
 jest.config.ts
 jest.setup.ts
 tsconfig.json

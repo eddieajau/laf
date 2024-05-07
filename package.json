@@ -1,6 +1,6 @@
 {
   "name": "@eddieajau/laf",
-  "version": "1.0.0-4",
+  "version": "1.0.0-10",
   "description": "A Light Application Framework for Node.js and Typescript",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -48,6 +48,7 @@
     "demo": "node -r ts-node/register ./demo/demo | pino-pretty",
     "nuke": "rimraf node_modules",
     "lint": "eslint --ext .js,.ts .",
+    "prepublishOnly": "npm test && npm run build",
     "start": "node dist/index.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "test:c": "node --experimental-vm-modules node_modules/.bin/jest --collect-coverage",

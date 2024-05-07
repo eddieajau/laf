@@ -3,14 +3,31 @@
  * @license   MIT
  */
 
+import { Pagination } from '../pagination'
+
+/**
+ * Enum that defines a standard for sort direction.
+ */
 export enum ESortDirection {
   Ascending = 'asc',
   Descending = 'desc',
 }
 
-export interface IResult<T> {
+/**
+ * An interface that defines the shape for an API service that connects with a data source.
+ */
+export interface IApiService<Type, Args = object> {
+  count(args?: Args): Promise<number>
+  findMany(args: Args & Pagination): Promise<Type[]>
+  findOne?(id: string): Promise<Type | null>
+}
+
+/**
+ * An interface that defines the shape of an API response for a list of data.
+ */
+export interface IListResult<Type> {
   count: number
-  data: T[]
+  data: Type[]
   page: number
   limit: number
   hasMore: boolean

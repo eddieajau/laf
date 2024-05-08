@@ -30,7 +30,7 @@ describe('application/Application', () => {
 
     logger = {} as Logger
     logger.info = jest.fn()
-    logger.trace = jest.fn()
+    logger.debug = jest.fn()
 
     instance = new Application(env, logger)
     instance.addModules([TestModule])

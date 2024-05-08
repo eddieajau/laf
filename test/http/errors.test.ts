@@ -41,6 +41,7 @@ describe('http/errors', () => {
 
       expect(res.status).toHaveBeenCalledWith(error.status)
       expect(res.send).toHaveBeenCalledWith(error)
+      /* @ts-expect-error err */
       expect(res.err).toBe(error)
     })
 
@@ -58,6 +59,7 @@ describe('http/errors', () => {
 
       expect(res.status).toHaveBeenCalledWith(500)
       expect(res.send).toHaveBeenCalledWith(error)
+      /* @ts-expect-error err */
       expect(res.err).toBe(error)
     })
 
@@ -72,6 +74,7 @@ describe('http/errors', () => {
       handleError(error, req, res, next)
 
       expect(next).toHaveBeenCalledWith(error)
+      /* @ts-expect-error err */
       expect(res.err).toBeUndefined()
     })
   })

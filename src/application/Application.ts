@@ -6,33 +6,7 @@
 import { Container } from 'inversify'
 import { Module } from './Module'
 import { ApplicationConfig } from './ApplicationConfig'
-
-export const LOGGER = Symbol('logger')
-
-export interface Logger {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  debug(...args: any[]): void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  error(...args: any[]): void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  info(...args: any[]): void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  trace(...args: any[]): void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  warn(...args: any[]): void
-}
-
-export class NullLogger implements Logger {
-  debug(): void {}
-
-  error(): void {}
-
-  info(): void {}
-
-  trace(): void {}
-
-  warn(): void {}
-}
+import { LOGGER, Logger, NullLogger } from './Logger'
 
 /**
  * Provides the basic scaffolding for a modular Node.js server.
@@ -88,7 +62,7 @@ export class Application {
    */
   public register(): this {
     this.modules.forEach((module) => {
-      this.logger.trace(`Application:register ${module.constructor.name}`)
+      this.logger.debug(`Application:register ${module.constructor.name}`)
       module.register()
     })
 
@@ -100,7 +74,7 @@ export class Application {
    */
   public async start(): Promise<void> {
     for (const module of this.modules) {
-      this.logger.trace(`Application:start    ${module.constructor.name}`)
+      this.logger.debug(`Application:start    ${module.constructor.name}`)
       await module.start()
     }
   }
@@ -110,9 +84,9 @@ export class Application {
    */
   public async stop(): Promise<void> {
     for (const module of this.modules) {
-      this.logger.trace(`Application:stop     ${module.constructor.name}`)
+      this.logger.debug(`Application:stop     ${module.constructor.name}`)
       await module.stop()
-      this.logger.trace(`Application:stopped  ${module.constructor.name}`)
+      this.logger.debug(`Application:stopped  ${module.constructor.name}`)
     }
   }
 

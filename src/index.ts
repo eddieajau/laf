@@ -8,6 +8,7 @@ export * from './api/types'
 
 export * from './application/Application'
 export * from './application/ApplicationConfig'
+export * from './application/Logger'
 export * from './application/Module'
 
 export { IUser, IUserSession, userAuthenticated } from './http/auth'

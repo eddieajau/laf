@@ -16,6 +16,7 @@ export function handleError(error: Error | HttpError, req: Request, res: Respons
     return next(error)
   }
 
+  /* @ts-expect-error err */
   res.err = error
   res.status('status' in error ? error.status : undefined || 500)
   res.send(error)

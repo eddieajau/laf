@@ -4,14 +4,35 @@
  */
 
 import { Container } from 'inversify'
-import pino, { P } from 'pino'
-
 import { Module } from './Module'
 import { ApplicationConfig } from './ApplicationConfig'
 
 export const LOGGER = Symbol('logger')
 
-export type Logger = P.Logger
+export interface Logger {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  debug(...args: any[]): void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error(...args: any[]): void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info(...args: any[]): void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  trace(...args: any[]): void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  warn(...args: any[]): void
+}
+
+export class NullLogger implements Logger {
+  debug(): void {}
+
+  error(): void {}
+
+  info(): void {}
+
+  trace(): void {}
+
+  warn(): void {}
+}
 
 /**
  * Provides the basic scaffolding for a modular Node.js server.
@@ -41,7 +62,7 @@ export class Application {
   private modules = [] as Module[]
 
   constructor(config: ApplicationConfig, logger?: Logger) {
-    this.logger = logger ?? pino({ level: config.logLevel })
+    this.logger = logger ?? new NullLogger()
     this.container.bind(ApplicationConfig).toConstantValue(config)
     this.container.bind(LOGGER).toConstantValue(this.logger)
   }

@@ -6,13 +6,14 @@
 
 import 'reflect-metadata'
 import dotenv from 'dotenv'
+import pino from 'pino'
 import { Application, ApplicationConfig, HttpModule } from '../src'
 import { version } from '../package.json'
 
 dotenv.config()
 
 const config = new ApplicationConfig({ ...process.env, version })
-const application = new Application(config)
+const application = new Application(config, pino({ level: 'info' }))
 
 application
   .addModules([HttpModule])

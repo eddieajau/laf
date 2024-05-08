@@ -14,7 +14,7 @@ import { Logger, LOGGER } from '../application/Application'
 import { handleAuth } from './auth'
 import { handleNotFound, handleError } from './errors'
 import { HttpModuleConfig } from './HttpModuleConfig'
-import { logging } from './logging'
+// import { logging } from './logging'
 import { TokenService } from './TokenService'
 import { TokenServiceConfig } from './TokenServiceConfig'
 
@@ -40,7 +40,7 @@ export class HttpModule extends Module {
     const tokens = this.container.get(TokenService)
     const port = httpOptions.port
 
-    app.use(logging(logger))
+    // app.use(logging(logger))
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))

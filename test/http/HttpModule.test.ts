@@ -3,8 +3,8 @@
  * @license   MIT
  */
 
-import { Application, ApplicationConfig, HttpModule, ScalarDictionary } from '../../src'
-import pino from 'pino'
+import { Application, ApplicationConfig, HttpModule, NullLogger, ScalarDictionary } from '../../src'
+// import pino from 'pino'
 
 describe('http/HttpModule', () => {
   let application: Application
@@ -14,7 +14,8 @@ describe('http/HttpModule', () => {
     process.env.HTTP_JWT_ISSUR = 'com.example'
 
     const config = new ApplicationConfig({ ...process.env, version: '1.0.0' })
-    const logger = pino({ level: 'error' })
+    // const logger = pino({ level: 'error' })
+    const logger = new NullLogger()
 
     application = new Application(config, logger).addModules([HttpModule]).register()
     await application.start()

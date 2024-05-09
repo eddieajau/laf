@@ -6,7 +6,9 @@
 export const LOGGER = Symbol('logger')
 
 /**
- * An interface that should work agnostically with most loggers.
+ * A minimal syslog-compatible interface that should work agnostically with most loggers.
+ *
+ * This is the minimum that required for Application and HttpModule logging.
  */
 export interface Logger {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

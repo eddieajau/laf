@@ -5,7 +5,7 @@
 
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response, Router } from 'express'
 import http from 'http'
 import { createHttpTerminator, HttpTerminator } from 'http-terminator'
 import { ApplicationConfig } from '../application/ApplicationConfig'
@@ -17,12 +17,71 @@ import { HttpModuleConfig } from './HttpModuleConfig'
 // import { logging } from './logging'
 import { TokenService } from './TokenService'
 import { TokenServiceConfig } from './TokenServiceConfig'
+import { Container } from 'inversify'
 
+const MIDDLEWARE = Symbol('express-middleware')
 const app = express()
 const router = express.Router()
 let httpServer: http.Server
 
+/**
+ * A module to wire up an Express HTTP server.
+ *
+ * @example
+ * ```typescript
+ * import { HttpModule } from '@eddieajau/laf'
+ * import { Request, Response, NextFunction } from 'express'
+ *
+ * export class MyModule extends Module {
+ *   public register(): void {
+ *     HttpModule.addMiddleware(this.container, (req: Request, res: Response, next: NextFunction) => {
+ *      // Your middleware logic here.
+ *      next()
+ *    })
+ *   }
+ * }
+ */
 export class HttpModule extends Module {
+  /**
+   * Expose the Express Router class for better clarity.
+   *
+   * @example
+   * ```typescript
+   * import { HttpModule } from '@eddieajau/laf'
+   *
+   * export class MyModule extends Module {
+   *   public start(): void {
+   *     const router = this.container.get(HttpModule.Router)
+   *     // ...
+   *   }
+   * }
+   */
+  public static Router = Router
+
+  /**
+   * A helper method to add middleware to the Express server.
+   *
+   * @example
+   * ```typescript
+   * import { HttpModule } from '@eddieajau/laf'
+   * import { Request, Response, NextFunction } from 'express'
+   *
+   * export class MyModule extends Module {
+   *   public register(): void {
+   *     HttpModule.addMiddleware(this.container, (req: Request, res: Response, next: NextFunction) => {
+   *      // Your middleware logic here.
+   *      next()
+   *    })
+   *   }
+   * }
+   */
+  public static addMiddleware(
+    container: Container,
+    middleware: (req: Request, res: Response, next: NextFunction) => void
+  ): void {
+    container.bind(MIDDLEWARE).toConstantValue(middleware)
+  }
+
   private terminator!: HttpTerminator
 
   public register(): void {
@@ -41,6 +100,11 @@ export class HttpModule extends Module {
     const port = httpOptions.port
 
     // app.use(logging(logger))
+    if (this.container.isBound(MIDDLEWARE)) {
+      this.container
+        .getAll<(req: Request, res: Response, next: NextFunction) => void>(MIDDLEWARE)
+        .forEach((middleware) => app.use(middleware))
+    }
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))

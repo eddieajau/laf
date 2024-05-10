@@ -9,6 +9,7 @@ import dotenv from 'dotenv'
 import pino from 'pino'
 import { Application, ApplicationConfig, HttpModule } from '../src'
 import { version } from '../package.json'
+import { ThingsModule } from './modules/things/ThingsModule'
 
 dotenv.config()
 
@@ -16,7 +17,7 @@ const config = new ApplicationConfig({ ...process.env, version })
 const application = new Application(config, pino({ level: 'info' }))
 
 application
-  .addModules([HttpModule])
+  .addModules([HttpModule, ThingsModule])
   .register()
   .start()
   .then(() => application.logger.info(`Server v${version} ready`))

@@ -1,2 +1,11 @@
 ###
 GET http://localhost:3000
+
+###
+GET http://localhost:3000/things
+
+###
+GET http://localhost:3000/things?page=2
+
+###
+GET http://localhost:3000/things/1

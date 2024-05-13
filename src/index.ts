@@ -21,6 +21,8 @@ export * from './http/TokenServiceConfig'
 export * from './lib/fakeUuid'
 export * from './lib/zeroPad'
 
+export * from './openapi'
+
 export * from './pagination'
 
 export * from './types'

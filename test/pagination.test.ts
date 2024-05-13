@@ -22,6 +22,7 @@ describe('pagination', () => {
     })
 
     it('should allow zero limit', () => {
+      // Why the zero limit?
       expect(paginate({ limit: 0 })).toEqual({ page: 1, limit: 0 })
       expect(paginate({ limit: '0' })).toEqual({ page: 1, limit: 0 })
     })

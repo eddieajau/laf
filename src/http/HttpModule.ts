@@ -10,7 +10,7 @@ import http from 'http'
 import { createHttpTerminator, HttpTerminator } from 'http-terminator'
 import { ApplicationConfig } from '../application/ApplicationConfig'
 import { Module } from '../application/Module'
-import { Logger, LOGGER } from '../application/Logger'
+import { ILogger, LOGGER } from '../application/Logger'
 import { handleAuth } from './auth'
 import { handleNotFound, handleError } from './errors'
 import { HttpModuleConfig } from './HttpModuleConfig'
@@ -95,7 +95,7 @@ export class HttpModule extends Module {
     let startTime: number
     const httpOptions = this.container.get(HttpModuleConfig)
     const serverOptions = this.container.get(ApplicationConfig)
-    const logger = this.container.get<Logger>(LOGGER)
+    const logger = this.container.get<ILogger>(LOGGER)
     const tokens = this.container.get(TokenService)
     const port = httpOptions.port
 

@@ -4,9 +4,9 @@
  */
 
 // import httpLogger from 'pino-http'
-// import { Logger } from '../application/Application'
-
-// export function logging(logger: Logger) {
+// import { ILogger } from '../application/Logger'
+//
+// export function logging(logger: ILogger) {
 //   return httpLogger({
 //     logger,
 //     redact: {

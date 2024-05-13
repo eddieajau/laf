@@ -6,7 +6,7 @@
 import { Container } from 'inversify'
 import { Module } from './Module'
 import { ApplicationConfig } from './ApplicationConfig'
-import { LOGGER, Logger, NullLogger } from './Logger'
+import { LOGGER, ILogger, NullLogger } from './Logger'
 
 /**
  * Provides the basic scaffolding for a modular Node.js server.
@@ -21,7 +21,7 @@ export class Application {
   /**
    * The logger.
    */
-  public logger: Logger
+  public logger: ILogger
 
   /**
    * The dependency injection container.
@@ -35,7 +35,7 @@ export class Application {
    */
   private modules = [] as Module[]
 
-  constructor(config: ApplicationConfig, logger?: Logger) {
+  constructor(config: ApplicationConfig, logger?: ILogger) {
     this.logger = logger ?? new NullLogger()
     this.container.bind(ApplicationConfig).toConstantValue(config)
     this.container.bind(LOGGER).toConstantValue(this.logger)

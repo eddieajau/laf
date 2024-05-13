@@ -5,30 +5,30 @@
 
 import { jest } from '@jest/globals'
 import { Container } from 'inversify'
-import { LOGGER, Module, Application as Application, ApplicationConfig, Logger } from '../../src'
+import { LOGGER, Module, Application as Application, ApplicationConfig, ILogger } from '../../src'
 
 class TestModule extends Module {
   public register(): void {
-    this.container.get<Logger>(LOGGER).info('registered')
+    this.container.get<ILogger>(LOGGER).info('registered')
   }
 
   public async start(): Promise<void> {
-    this.container.get<Logger>(LOGGER).info('started')
+    this.container.get<ILogger>(LOGGER).info('started')
   }
 
   public async stop(): Promise<void> {
-    this.container.get<Logger>(LOGGER).info('stopped')
+    this.container.get<ILogger>(LOGGER).info('stopped')
   }
 }
 
 describe('application/Application', () => {
   let instance: Application
-  let logger: Logger
+  let logger: ILogger
 
   beforeEach(() => {
     const env = new ApplicationConfig({ version: '1.0.0' })
 
-    logger = {} as Logger
+    logger = {} as ILogger
     logger.info = jest.fn()
     logger.debug = jest.fn()
 
@@ -44,13 +44,13 @@ describe('application/Application', () => {
     it('should create a default logger if not supplied', () => {
       const app = new Application(new ApplicationConfig({ version: '1.0.0' }))
 
-      const result = app.getContainer().get<Logger>(LOGGER)
+      const result = app.getContainer().get<ILogger>(LOGGER)
       // todo assert that the logger is a pino logger
       expect(result).not.toBeUndefined()
     })
 
     it('should bind a custom logger if supplied', () => {
-      const logger = {} as Logger
+      const logger = {} as ILogger
       const app = new Application(new ApplicationConfig({ version: '1.0.0' }), logger)
 
       expect(app.getContainer().get(LOGGER)).toBe(logger)

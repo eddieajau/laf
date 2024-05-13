@@ -10,7 +10,7 @@ export const LOGGER = Symbol('logger')
  *
  * This is the minimum that required for Application and HttpModule logging.
  */
-export interface Logger {
+export interface ILogger {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   debug(...args: any[]): void
 
@@ -27,7 +27,7 @@ export interface Logger {
 /**
  * A logger with no side-effects.
  */
-export class NullLogger implements Logger {
+export class NullLogger implements ILogger {
   debug(): void {}
 
   error(): void {}

@@ -3,7 +3,7 @@
  * @license   MIT
  */
 
-import { OpenApiParameter, OpenApiResponse } from '../src'
+import { OpenApiParameter, OpenApiResponse, OpenApiSchema } from '../src'
 
 describe('openapi', () => {
   describe('OpenApiParameter', () => {
@@ -17,14 +17,6 @@ describe('openapi', () => {
   })
 
   describe('OpenApiResponse', () => {
-    it('Error', () => {
-      expect(OpenApiResponse.Error).toBeDefined()
-    })
-
-    it('ValidationError', () => {
-      expect(OpenApiResponse.ValidationError).toBeDefined()
-    })
-
     it('BadRequest', () => {
       expect(OpenApiResponse.BadRequest).toBeDefined()
     })
@@ -32,9 +24,19 @@ describe('openapi', () => {
     it('NotFound', () => {
       expect(OpenApiResponse.NotFound).toBeDefined()
     })
+  })
+
+  describe('OpenApiSchema', () => {
+    it('Error', () => {
+      expect(OpenApiSchema.Error).toBeDefined()
+    })
+
+    it('ValidationError', () => {
+      expect(OpenApiSchema.ValidationError).toBeDefined()
+    })
 
     it('ListResult', () => {
-      expect(OpenApiResponse.ListResult).toBeDefined()
+      expect(OpenApiSchema.ListResult).toBeDefined()
     })
   })
 })

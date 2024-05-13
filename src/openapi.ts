@@ -27,6 +27,37 @@ export class OpenApiParameter {
 }
 
 export class OpenApiResponse {
+  static BadRequest = {
+    description: 'The body/input was invalid (has `message` property), or validation failed (has `errors` property).',
+    content: {
+      'application/json': {
+        schema: {
+          oneOf: [
+            {
+              $ref: '#/components/schemas/Error',
+            },
+            {
+              $ref: '#/components/schemas/ValidationError',
+            },
+          ],
+        },
+      },
+    },
+  }
+
+  static NotFound = {
+    description: 'The specified resource was not found.',
+    content: {
+      'application/json': {
+        schema: {
+          $ref: '#/components/schemas/Error',
+        },
+      },
+    },
+  }
+}
+
+export class OpenApiSchema {
   /**
    * Generic error schema.
    */
@@ -63,35 +94,6 @@ export class OpenApiResponse {
       },
     },
     required: ['errors', 'message'],
-  }
-
-  static BadRequest = {
-    description: 'The body/input was invalid (has `message` property), or validation failed (has `errors` property).',
-    content: {
-      'application/json': {
-        schema: {
-          oneOf: [
-            {
-              $ref: '#/components/schemas/Error',
-            },
-            {
-              $ref: '#/components/schemas/ValidationError',
-            },
-          ],
-        },
-      },
-    },
-  }
-
-  static NotFound = {
-    description: 'The specified resource was not found.',
-    content: {
-      'application/json': {
-        schema: {
-          $ref: '#/components/schemas/Error',
-        },
-      },
-    },
   }
 
   /**

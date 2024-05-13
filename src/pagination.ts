@@ -6,8 +6,8 @@
 const MAX_LIMIT = 100
 
 export interface IPagination {
-  page?: number
-  limit?: number
+  page?: number | string
+  limit?: number | string
 }
 
 export type Pagination = {
@@ -20,7 +20,7 @@ export type Pagination = {
  */
 export const paginate = ({ page, limit }: IPagination): Pagination => ({
   page: Math.max(1, Number(page) || 0),
-  limit: Number.isInteger(limit) ? Math.max(0, Math.min(Number(limit), MAX_LIMIT)) : 10,
+  limit: Number.isInteger(Number(limit)) ? Math.max(0, Math.min(Number(limit), MAX_LIMIT)) : 10,
 })
 
 /**

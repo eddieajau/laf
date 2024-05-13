@@ -13,14 +13,17 @@ describe('pagination', () => {
 
     it('should use extreme limits', () => {
       expect(paginate({ page: 0, limit: 101 })).toEqual({ page: 1, limit: 100 })
+      expect(paginate({ page: '0', limit: '101' })).toEqual({ page: 1, limit: 100 })
     })
 
     it('should set the page and limit', () => {
       expect(paginate({ page: 2, limit: 4 })).toEqual({ page: 2, limit: 4 })
+      expect(paginate({ page: '2', limit: '4' })).toEqual({ page: 2, limit: 4 })
     })
 
     it('should allow zero limit', () => {
       expect(paginate({ limit: 0 })).toEqual({ page: 1, limit: 0 })
+      expect(paginate({ limit: '0' })).toEqual({ page: 1, limit: 0 })
     })
   })
 

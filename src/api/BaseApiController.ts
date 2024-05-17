@@ -42,4 +42,21 @@ export class BaseApiController<Type, Service extends IApiService<Type, Args>, Ar
 
     return result
   }
+
+  /**
+   * Create one entity.
+   */
+  public async createOne({ body }: { body: Partial<Type> }) {
+    if (!this.service.createOne) {
+      throw HttpErrors.NotImplemented('service.createOne not implemented')
+    }
+
+    try {
+      this.service.validate && this.service.validate(body)
+    } catch (errors) {
+      throw { status: 400, errors }
+    }
+
+    return this.service.createOne(body)
+  }
 }

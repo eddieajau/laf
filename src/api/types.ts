@@ -16,10 +16,19 @@ export enum ESortDirection {
 /**
  * An interface that defines the shape for an API service that connects with a data source.
  */
-export interface IApiService<Type, Args = object> {
+export interface IApiService<Type, Args = object, CreateInput = Partial<Type>, UpdateInput = Partial<Type>> {
   count(args?: Args): Promise<number>
+
   findMany(args: Args & Pagination): Promise<Type[]>
+
   findOne?(id: string): Promise<Type | null>
+
+  /**
+   * @throws string[] - An array of error messages.
+   */
+  validate?(object: CreateInput | UpdateInput): void
+
+  createOne?(object: CreateInput): Promise<Type>
 }
 
 /**

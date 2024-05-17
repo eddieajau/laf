@@ -78,4 +78,45 @@ describe('api/BaseApiController', () => {
       )
     })
   })
+
+  describe('createOne', () => {
+    const body = data[0]
+
+    afterEach(() => jest.clearAllMocks())
+
+    it('should work', async () => {
+      service.createOne = jest.fn<() => Promise<(typeof data)[0]>>().mockResolvedValue(data[0])
+      service.validate = jest.fn()
+
+      const result = await instance.createOne({ body })
+
+      expect(result).toEqual(data[0])
+      expect(service.validate).toHaveBeenCalledWith(body)
+      expect(service.createOne).toHaveBeenCalledWith(body)
+    })
+
+    it('should throw if data is invalid', async () => {
+      const errors = ['the-error']
+
+      service.createOne = jest.fn<() => Promise<(typeof data)[0]>>().mockRejectedValue(new Error('should not call'))
+
+      service.validate = jest.fn(() => {
+        throw errors
+      })
+
+      try {
+        await instance.createOne({ body })
+        throw new Error('should throw')
+      } catch (err) {
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(err).toEqual({ status: 400, errors })
+      }
+    })
+
+    it('should throw if createOne not implemented', async () => {
+      await expect(() => instance.createOne({ body })).rejects.toThrow(
+        new HttpErrors.NotImplemented('service.createOne not implemented')
+      )
+    })
+  })
 })

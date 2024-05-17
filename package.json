@@ -1,6 +1,6 @@
 {
   "name": "@eddieajau/laf",
-  "version": "1.0.0-16",
+  "version": "1.0.0-17",
   "description": "A Light Application Framework for Node.js and Typescript",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

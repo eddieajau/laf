@@ -12,7 +12,13 @@ import { IApiService, IListResult } from './types'
  * This class provide a base implementation to support common API operations.
  */
 @injectable()
-export class BaseApiController<Type, Service extends IApiService<Type, Args>, Args = object> {
+export class BaseApiController<
+  Type,
+  Service extends IApiService<Type, Args, CreateInput, UpdateInput>,
+  Args = object,
+  CreateInput = Partial<Type>,
+  UpdateInput = Partial<Type>
+> {
   constructor(protected service: Service) {}
 
   /**
@@ -46,7 +52,7 @@ export class BaseApiController<Type, Service extends IApiService<Type, Args>, Ar
   /**
    * Create one entity.
    */
-  public async createOne({ body }: { body: Partial<Type> }) {
+  public async createOne({ body }: { body: CreateInput }) {
     if (!this.service.createOne) {
       throw HttpErrors.NotImplemented('service.createOne not implemented')
     }

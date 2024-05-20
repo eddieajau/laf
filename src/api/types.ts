@@ -23,12 +23,9 @@ export interface IApiService<Type, Args = object, CreateInput = Partial<Type>, U
 
   findOne?(id: string): Promise<Type | null>
 
-  /**
-   * @throws string[] - An array of error messages.
-   */
-  validate?(object: CreateInput | UpdateInput): void
-
   createOne?(object: CreateInput): Promise<Type>
+
+  updatedOne?(object: UpdateInput): Promise<Type>
 }
 
 /**

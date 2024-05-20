@@ -4,8 +4,10 @@
  */
 
 import { jest } from '@jest/globals'
+import { rejects } from 'assert'
 import HttpErrors from 'http-errors'
 import { BaseApiController } from '../../src/api/BaseApiController'
+import { ValidationError } from '../../src/api/ValidationError'
 import { IApiService, StringDictionary } from '../../src'
 
 describe('api/BaseApiController', () => {
@@ -84,33 +86,33 @@ describe('api/BaseApiController', () => {
 
     afterEach(() => jest.clearAllMocks())
 
-    it('should work', async () => {
+    it('should work, without validation', async () => {
       service.createOne = jest.fn<() => Promise<(typeof data)[0]>>().mockResolvedValue(data[0])
-      service.validate = jest.fn()
 
       const result = await instance.createOne({ body })
 
       expect(result).toEqual(data[0])
-      expect(service.validate).toHaveBeenCalledWith(body)
       expect(service.createOne).toHaveBeenCalledWith(body)
     })
 
     it('should throw if data is invalid', async () => {
-      const errors = ['the-error']
+      const expectedError = new ValidationError(['the-error'])
 
       service.createOne = jest.fn<() => Promise<(typeof data)[0]>>().mockRejectedValue(new Error('should not call'))
 
-      service.validate = jest.fn(() => {
-        throw errors
+      instance.validate = jest.fn(() => {
+        throw expectedError
       })
 
-      try {
-        await instance.createOne({ body })
-        throw new Error('should throw')
-      } catch (err) {
-        // eslint-disable-next-line jest/no-conditional-expect
-        expect(err).toEqual({ status: 400, errors })
-      }
+      return rejects(
+        () => instance.createOne({ body }),
+        (err) => {
+          expect(instance.validate).toHaveBeenCalledWith(body)
+          expect(err).toBe(expectedError)
+
+          return true
+        }
+      )
     })
 
     it('should throw if createOne not implemented', async () => {

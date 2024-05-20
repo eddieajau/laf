@@ -50,6 +50,13 @@ export class BaseApiController<
   }
 
   /**
+   * An optional method to validate the input before creating or updating an entity.
+   *
+   * @throws ValidationError
+   */
+  public validate?(body: CreateInput | UpdateInput): void
+
+  /**
    * Create one entity.
    */
   public async createOne({ body }: { body: CreateInput }) {
@@ -57,11 +64,7 @@ export class BaseApiController<
       throw HttpErrors.NotImplemented('service.createOne not implemented')
     }
 
-    try {
-      this.service.validate && this.service.validate(body)
-    } catch (errors) {
-      throw { status: 400, errors }
-    }
+    this.validate && this.validate(body)
 
     return this.service.createOne(body)
   }

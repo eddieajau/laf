@@ -5,6 +5,7 @@
 
 export * from './api/BaseApiController'
 export * from './api/types'
+export * from './api/ValidationError'
 
 export * from './application/Application'
 export * from './application/ApplicationConfig'

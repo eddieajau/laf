@@ -6,9 +6,7 @@
 import { jest } from '@jest/globals'
 import { rejects } from 'assert'
 import HttpErrors from 'http-errors'
-import { BaseApiController } from '../../src/api/BaseApiController'
-import { ValidationError } from '../../src/api/ValidationError'
-import { IApiService, StringDictionary } from '../../src'
+import { BaseApiController, IApiService, StringDictionary, ValidationError } from '../../src'
 
 describe('api/BaseApiController', () => {
   let service: IApiService<StringDictionary>

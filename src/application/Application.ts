@@ -19,6 +19,11 @@ import { LOGGER, ILogger, NullLogger } from './Logger'
  */
 export class Application {
   /**
+   * The symbol used to bind the process.env object to the container.
+   */
+  public static ENV = Symbol('process-env')
+
+  /**
    * The logger.
    */
   public logger: ILogger
@@ -35,9 +40,10 @@ export class Application {
    */
   private modules = [] as Module[]
 
-  constructor(config: ApplicationConfig, logger?: ILogger) {
+  constructor(config: ApplicationConfig, logger?: ILogger, env = process.env) {
     this.logger = logger ?? new NullLogger()
     this.container.bind(ApplicationConfig).toConstantValue(config)
+    this.container.bind(Application.ENV).toConstantValue(env)
     this.container.bind(LOGGER).toConstantValue(this.logger)
   }
 

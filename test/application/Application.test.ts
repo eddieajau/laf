@@ -59,6 +59,12 @@ describe('application/Application', () => {
     it('should bind the ApplicationConfig to the container', () => {
       expect(instance.getContainer().get(ApplicationConfig)).toBeInstanceOf(ApplicationConfig)
     })
+
+    it('should bind the environment vars to the container', () => {
+      const env = instance.getContainer().get<NodeJS.ProcessEnv>(Application.ENV)
+
+      expect(env.npm_package_name).toEqual('@eddieajau/laf')
+    })
   })
 
   describe('getContainer', () => {

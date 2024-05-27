@@ -8,11 +8,11 @@ import HttpErrors from 'http-errors'
 /**
  * A custom error class to handle validation errors.
  *
- * In this case the request is correctly formed, byt the entity submitted in not processable.
+ * In this case the request is correctly formed, but the entity submitted in not processable.
  * Therefore, the server will return a 422 status code.
  */
 export class ValidationError extends HttpErrors.UnprocessableEntity {
-  constructor(errors: string[], message?: string) {
+  constructor(public errors: string[], message?: string) {
     super(message)
   }
 }
